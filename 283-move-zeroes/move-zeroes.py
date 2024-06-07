@@ -6,6 +6,7 @@ class Solution:
         if len(nums)>=2:
             for i in range(len(nums)):
                 if(nums[i]==0):
+                    nums.append(nums[i])
                     nums.remove(nums[i])
-                    nums.append(0)
+                    
 
