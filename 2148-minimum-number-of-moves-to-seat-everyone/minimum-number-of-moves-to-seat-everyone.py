@@ -3,8 +3,7 @@ class Solution:
         students.sort()
         seats.sort()
         count=0
-        i=0
-        while i<len(students):
+        for i in range(len(students)):
             count+=abs(seats[i]-students[i])
             i+=1
         return count
