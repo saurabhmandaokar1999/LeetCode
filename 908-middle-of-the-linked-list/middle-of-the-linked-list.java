@@ -10,16 +10,15 @@
  */
 class Solution {
     public ListNode middleNode(ListNode head) {
-   //using tortoise ahe hare approach 2 pointers ene slow and one fast to find out the middle of linked list
-        ListNode fast = head;
-        ListNode slow =head;
-
-        while(fast!=null && fast.next!=null){
-            //Fast moves 2 times faster then slow and hence covers only half the distance.
-            fast=fast.next.next;
-            slow = slow.next;
+        int length=0;
+        ListNode temp=head;
+        while(head!=null ){
+            head=head.next;
+            length++;
         }
-        return slow;
-
+        for(int i =0;i<length/2;i++){
+            temp=temp.next;
+        }
+        return temp;
     }
 }
