@@ -1,14 +1,16 @@
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        HashMap<Integer,Integer> map = new HashMap<>();
-        for(int i=0;i<nums.length;i++){
-            int diff= target-nums[i]; // Find the diffrence in number
-            if(map.containsKey(diff)){
-                return new int[]{map.get(diff),i}; // If  present then return array
-            }else{
-                map.put(nums[i],i); // If not present then only add in map
+        int[] arr = new int[2];
+        for(int p=0; p<nums.length; p++){
+            for(int q=0; q<nums.length; q++){
+                if(nums[p]+nums[q]==target && p!=q){
+                    arr[0]= p;
+                    arr[1]=q;
+                    return arr;
+                }
             }
         }
-        return new int[0]; // Return empty array if nothing is present.
+        return null;
+        
     }
 }
