@@ -2,9 +2,10 @@ class Solution {
     public int beautySum(String s) {
         int len = s.length();
         int count = 0;
+        int[] alp = new int[26];
 
         for(int i=0;i<len;i++){
-            int[] alp = new int[26];
+            Arrays.fill(alp, 0);
             for(int j=i;j<len;j++){
                 int index = s.charAt(j)-'a';
                 alp[index]+=1;
