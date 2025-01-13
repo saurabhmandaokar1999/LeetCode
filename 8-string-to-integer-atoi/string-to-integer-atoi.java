@@ -9,7 +9,6 @@ class Solution {
             return result * sign;
         }
         char tempChar=s.charAt(index);
-
         if(index ==0 && (tempChar=='-' || tempChar=='+')){
             return myAH(s,++index,result, tempChar=='-'?-1:1);
         }
