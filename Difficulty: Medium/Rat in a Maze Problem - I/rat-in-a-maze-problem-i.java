@@ -52,7 +52,7 @@ class Solution {
     public ArrayList<String> findPath(ArrayList<ArrayList<Integer>> mat) {
         int size = mat.size();
         ArrayList<String> ans = new ArrayList<>();
-        mat.get(0).set(0,0);
+       // mat.get(0).set(0,0);
         helper(0,0,mat,size,ans,new StringBuilder());
         return ans;
          }
