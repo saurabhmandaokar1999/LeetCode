@@ -48,22 +48,19 @@ public class Main {
 // User function Template for Java
 class Solution {
     int minCost(int[] height) {
-        // code here
-        int len =height.length;
-        int[] arr = new int[len+1];
-        for(int i=0;i<=len;i++){
-            arr[i]=-1;
+        int len = height.length;
+        int []dp = new int[len+1];
+        dp[0]=0;
+        for(int i=1;i<len;i++){
+            int fs= dp[i-1]+Math.abs(height[i]-height[i-1]);
+            int ss=Integer.MAX_VALUE;
+            if(i>1) ss= dp[i-2] + Math.abs(height[i]-height[i-2]);
+            dp[i]=Math.min(fs,ss);
         }
-        return helper(height,len-1,arr);
+        return dp[len-1];
+        
+       }
     }
-    int helper(int height[] ,int count,int arr[]){
-        if(count==0)return 0;
-        if(arr[count]!=-1) return arr[count];
-        int one = helper(height,count-1,arr)+Math.abs(height[count]-height[count-1]);
-        int two = (count-2>=0) ? helper(height,count-2,arr)+Math.abs(height[count]-height[count-2]):Integer.MAX_VALUE;
-        return arr[count] = one<two ? one:two;
-    }
-}
 
 //{ Driver Code Starts.
 
