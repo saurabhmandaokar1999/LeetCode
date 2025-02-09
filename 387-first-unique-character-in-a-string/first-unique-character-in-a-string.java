@@ -13,8 +13,7 @@ class Solution {
          }
          for(int i = 0;i<c.length;i++){
             if(map.get(c[i])==1){
-                ans=i;
-                break;
+                return i;
             }
          }
          return ans;
