@@ -1,38 +1,33 @@
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
-        for(int i=0;i<nums.length-2;i++){
-            int j=i+1;
-            int k=nums.length-1;
-            if(i>0 && nums[i]==nums[i-1]){
+        int n = nums.length;
+        int i = 0;
+        List<List<Integer>> arr = new ArrayList<>();
+        while (i < n - 2) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                i++;
                 continue;
             }
-            while(j<k){
-                if(nums[i]+nums[j]+nums[k]==0){
-                    List<Integer> list1=new ArrayList<>();
-                    list1.add(nums[i]);
-                    list1.add(nums[j]);
-                    list1.add(nums[k]);
-                    list.add(list1);
-                    while(j<k && nums[j]==nums[j+1]){
+            int j = i + 1;
+            int k = n - 1;
+            while (j < k) {
+                int total = nums[i] + nums[j] + nums[k];
+                if (total > 0) {
+                    k--;
+                } else if (total < 0) {
+                    j++;
+                } else {
+                    arr.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    j++;
+                    while (nums[j] == nums[j - 1] && j < k) {
                         j++;
                     }
-                    while(j<k && nums[k]==nums[k-1]){
-                        k--;
-                    }
-                    j++;
-                    k--;
                 }
-                else if(nums[i]+nums[j]+nums[k]<0){
-                    j++;
-                }
-                else{
-                    k--;
-                }
-
             }
+            if (nums[i] > 0) return arr;
+            i++;
         }
-        return list;
+        return arr;
     }
 }
