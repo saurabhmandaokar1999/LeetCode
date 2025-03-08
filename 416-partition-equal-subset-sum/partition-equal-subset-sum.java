@@ -1,30 +1,33 @@
 class Solution {
     public boolean canPartition(int[] nums) {
-        int sum =0,len=0;
-        for(int i :nums){
+        int tar =0,len=0;
+        for(int i:nums){
             len++;
-            sum+=i;
+            tar+=i;
         }
-        if(sum%2!=0){return false;}
-        int[][] dp = new int[len][(sum/2)+1];
-        for(int[] temp: dp){
-            Arrays.fill(temp,-1);
-        }
-        return helper(nums,sum/2,dp,len-1);
-    }
-    public boolean helper(int [] nums,int target,int[][] dp,int idx){
-    if(target==0)return true;
-    if(idx==0){
-        return nums[0]==target;
-    }
-    if(dp[idx][target]!=-1) return dp[idx][target]==1;
+        if(tar%2!=0) return false;
 
-    boolean np = helper(nums,target,dp,idx-1);
-    boolean p=false;
-    if(nums[idx]<=target){
-        p=helper(nums,target-nums[idx],dp,idx-1);
-    }
-    dp[idx][target]= np||p ? 1:0;
-    return p||np;
+        boolean[][] dp = new boolean[len][(tar/2)+1];
+        int NTar= tar/2;
+        for(boolean arr[]:dp){
+            Arrays.fill(arr,false);
+        }
+        for(int i=0;i<len;i++){
+            dp[i][0]=true;
+        }
+        if(nums[0]<=NTar){
+            dp[0][nums[0]]=true;
+        }
+        for(int i=1;i<len;i++){
+            for(int j=1;j<=NTar;j++){
+                boolean np=dp[i-1][j];
+                boolean p=false;
+                if(nums[i]<=j){
+                    p=dp[i-1][j-nums[i]];
+                }
+                dp[i][j]= p||np;
+            }
+        }
+        return dp[len-1][NTar];
     }
 }
