@@ -50,9 +50,9 @@ class Solution {
         
         if(dp[idx][tar]!=-1) return dp[idx][tar];
         
-        int np = helper(nums,dp,idx-1,tar);
+        int np=helper(nums,dp,idx-1,tar);
         
-        int p =0;
+        int p=0;
         if(nums[idx]<=tar){
             p=helper(nums,dp,idx-1,tar-nums[idx]);
         }
