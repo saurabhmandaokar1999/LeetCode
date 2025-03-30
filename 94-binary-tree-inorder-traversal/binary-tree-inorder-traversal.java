@@ -15,6 +15,7 @@
  */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
+        //reccursive approach
         List<Integer> list= new ArrayList<>();
         return list=helper(root,list);
     }
