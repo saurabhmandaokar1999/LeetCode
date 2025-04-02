@@ -14,16 +14,18 @@
  * }
  */
 class Solution {
+
+    //can you write this withour using external class
+    //just basic programming concept is used
+    int max=0;
+    int count=0;
     public int diameterOfBinaryTree(TreeNode root) {
-        int[] arr= new int[1];
-        helper(root,arr);
-        return arr[0];
-    }
-    public int helper(TreeNode root, int[] arr){
         if(root==null) return 0;
-        int l=helper(root.left,arr);
-        int r=helper(root.right,arr); 
-        arr[0]=Math.max(arr[0],l+r);
-        return 1+Math.max(l,r);
+        count++;
+        int l= diameterOfBinaryTree(root.left);
+        int r= diameterOfBinaryTree(root.right);
+        count--;
+        max = Math.max(max,l+r);
+        return count==0 ? max : Math.max(l,r)+1;
     }
 }
