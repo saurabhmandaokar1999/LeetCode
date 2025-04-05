@@ -18,19 +18,18 @@ class Solution {
         Queue<TreeNode> q = new ArrayDeque<>();
         List<List<Integer>> ans = new ArrayList<>();
         if(root==null) return ans;
-        q.offer(root);
-        while(!q.isEmpty()){
-            int qSize = q.size();
-            List<Integer> tempList = new ArrayList<>();
-            for(int i=0;i<qSize;i++){
-                TreeNode temp = q.poll();
-                if(temp.left!=null) {q.offer(temp.left);}
-                if(temp.right!=null) {q.offer(temp.right);}
-                tempList.add(temp.val);
+        q.add(root);
+        while(!q.isEmpty() && root!=null){
+            List<Integer> temp = new ArrayList<>();
+            int size = q.size();
+            for(int i =0;i<size;i++){
+                TreeNode curr = q.remove();
+                temp.add(curr.val);
+                if(curr.left!=null) q.offer(curr.left);
+                if(curr.right!=null) q.offer(curr.right);
             }
-            ans.add(tempList);
+            ans.add(temp);
         }
         return ans;
-
     }
 }
