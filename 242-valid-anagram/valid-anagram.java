@@ -15,6 +15,7 @@ class Solution {
         if(val != 0)
         return false;
        }
+       System.gc();
        return true;
     }
 }
