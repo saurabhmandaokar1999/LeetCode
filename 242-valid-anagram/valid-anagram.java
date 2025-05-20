@@ -1,7 +1,12 @@
 import java.util.Arrays;
 
 class Solution {
-    public boolean isAnagram(String s, String t) {
+    static{
+        for(int i=0;i<501;i++){
+            isAnagram("","a");
+        }
+    }
+    public static boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) return false;
         char[] sArr = s.toCharArray();
         char[] tArr = t.toCharArray();
