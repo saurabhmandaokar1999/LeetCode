@@ -11,20 +11,18 @@
  */
 public class Solution {
     public ListNode detectCycle(ListNode head) {
-        ListNode slow=head;
-        ListNode fast=head;
+        ListNode slow = head;
+        ListNode fast = head;
         while(fast!=null && fast.next!=null){
-            //Tortoise and hare Algorithm || Floyd's Cycle-Finding
-            slow = slow.next;
-            fast = fast.next.next;
-            //First time when the fast and slow pointer meets we reset slow to head.
-            if(slow==fast){
-                slow= head;
-                while(slow!=fast){
+            slow=slow.next;
+            fast= fast.next.next;
+            if(fast==slow){
+                slow = head;
+                while(fast != slow){
                     slow=slow.next;
-                    fast=fast.next;
+                    fast = fast.next;
                 }
-                return slow;
+                 return slow;
             }
         }
         return null;
