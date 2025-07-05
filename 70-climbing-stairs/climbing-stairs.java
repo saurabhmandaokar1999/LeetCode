@@ -1,14 +1,14 @@
 class Solution {
     public int climbStairs(int n) {
-        //uisng DP and tabulation approach
-        if(n==1)return 1;
-        int p1=2;
-        int p2=1;
-        for(int i=3;i<=n;i++){
-            int count = p1+p2;
-            p2=p1;
-            p1=count;
-        }
-        return p1;
+        int[] cache = new int[n+1];
+        Arrays.fill(cache,-1);
+        return helper(n,cache);
     }
+    public int helper(int n , int[] cache){
+        if(n==0) return 1;
+        if(n==1) return 1;
+        if(cache[n]!=-1) return cache[n];
+        return cache[n]=helper(n-1,cache)+helper(n-2,cache);
+    }
+
 }
