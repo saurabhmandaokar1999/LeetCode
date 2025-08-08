@@ -15,18 +15,16 @@
  */
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-        //Itrative approach
+        List<Integer> ans = new ArrayList<>();
+        if(root == null) return ans;
         Stack<TreeNode> stk = new Stack<>();
-        List<Integer> lst = new ArrayList<Integer>();
-
         stk.push(root);
         while(!stk.isEmpty()){
-            TreeNode temp = stk.pop();
-            if(temp!=null){ lst.add(temp.val);
-            if(temp.right!=null) stk.push(temp.right);
-            if(temp.left!=null) stk.push(temp.left);
-            }
-        }        
-        return lst;
+            TreeNode curr = stk.pop();
+            if(curr.right != null) stk.push(curr.right);
+            if(curr.left != null) stk.push(curr.left);
+            ans.add(curr.val);
+        }
+        return ans;
     }
 }
