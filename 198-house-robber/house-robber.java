@@ -1,15 +1,17 @@
 class Solution {
     public int rob(int[] nums) {
-        //space optimized approach
-        if(nums.length == 0) return 0;
-        if(nums.length == 1) return nums[0];
-        int p = nums[0];
-        int pp = 0;
-        for(int i=1;i<nums.length;i++){
-            int curr = Math.max(nums[i]+pp,p);
-            pp=p;
-            p=curr;
-        }
-        return p;
+        int len = nums.length;
+        int[] dp = new int[len];
+        Arrays.fill(dp,-1);
+        return helper(nums,len-1,dp);
+    }
+    public int helper(int[] nums, int n,int[] dp){
+        if(n<0) return 0;
+        if(n==0) return nums[0];
+       if(dp[n]!=-1) return dp[n];
+        int p=nums[n]+helper(nums,n-2,dp);
+        int np=helper(nums,n-1,dp);
+        
+        return dp[n]=Math.max(p,np);
     }
 }
