@@ -3,17 +3,22 @@ class Solution {
         int row=grid.length;
         int col=grid[0].length;
         int[][] dp = new int[row][col];
-        for(int[] d:dp){
-            Arrays.fill(d,-1);
+        dp[0][0]=grid[0][0];
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(i==0){
+                    if(j>0) dp[0][j]=grid[i][j]+dp[0][j-1];
+                }
+                if(j==0){
+                    if(i>0) dp[i][0]=grid[i][j]+dp[i-1][0];
+                }
+                if(i>0 && j>0){
+                    int d=grid[i][j]+dp[i-1][j];
+                    int r=grid[i][j]+dp[i][j-1];
+                    dp[i][j]=Math.min(d,r);
+                }    
+            }
         }
-        return helper(row-1,col-1,grid,dp);
-    }
-    public int helper(int row,int col,int[][] grid,int[][] dp){
-        if(row<0 || col<0) return 200*200;
-        if(row==0 && col==0) return grid[0][0];
-        if(dp[row][col]!=-1) return dp[row][col];
-         int u=grid[row][col]+helper(row-1,col,grid,dp);
-         int l=grid[row][col]+helper(row,col-1,grid,dp);
-         return dp[row][col]=Math.min(u,l);
+        return dp[row-1][col-1];
     }
 }
