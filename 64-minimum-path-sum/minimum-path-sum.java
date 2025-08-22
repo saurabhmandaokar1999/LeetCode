@@ -1,25 +1,19 @@
 class Solution {
     public int minPathSum(int[][] grid) {
-        int i = grid.length;
-        int j = grid[0].length;
-        int[][] dp = new int [i][j];
-        for(int[] row: dp){
-            Arrays.fill(row,-1);
+        int row=grid.length;
+        int col=grid[0].length;
+        int[][] dp = new int[row][col];
+        for(int[] d:dp){
+            Arrays.fill(d,-1);
         }
-        return helper(i-1,j-1,grid,dp);
-        
+        return helper(row-1,col-1,grid,dp);
     }
-    private int helper(int i, int j,int[][] grid,int[][] dp){
-        if(i==0 && j==0){
-            return grid[0][0];
-        }
-        if(i<0 || j<0){
-            return 200*200;
-        }
-        if(dp[i][j]!=-1) return dp[i][j];
-        int up = grid[i][j]+helper(i-1,j,grid,dp);
-        int left = grid[i][j]+helper(i,j-1,grid,dp);
-
-        return dp[i][j]=Math.min(up,left);
+    public int helper(int row,int col,int[][] grid,int[][] dp){
+        if(row<0 || col<0) return 200*200;
+        if(row==0 && col==0) return grid[0][0];
+        if(dp[row][col]!=-1) return dp[row][col];
+         int u=grid[row][col]+helper(row-1,col,grid,dp);
+         int l=grid[row][col]+helper(row,col-1,grid,dp);
+         return dp[row][col]=Math.min(u,l);
     }
 }
