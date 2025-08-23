@@ -1,30 +1,27 @@
 class Solution {
-    private static final int INF = 1_000_000_000;
+    private static final int INF = 1_000_000_000; 
     public int minFallingPathSum(int[][] matrix) {
-        int row=matrix.length;
-        int col=matrix[0].length;
-        int ans=Integer.MAX_VALUE;
-        int dp[][] = new int[row][col];
-        for(int[] d:dp){
-            Arrays.fill(d,Integer.MIN_VALUE);
-        }
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int[][] dp = new int[row][col];
+
         for(int i=0;i<col;i++){
-            ans=Math.min(ans,helper(0,i,matrix,row,col,dp));
+            dp[0][i]=matrix[0][i];
+        }
+        int dif[] = {-1,0,1};
+        for(int i=1;i<row;i++){
+            for(int j=0;j<col;j++){
+                int min=INF;
+                for(int d:dif){
+                if(j+d>=0 && j+d<col) min=Math.min(min,matrix[i][j]+dp[i-1][j+d]);
+                }
+                 dp[i][j]=min;
+            }
+        }
+        int ans=INF;
+        for(int i=0;i<col;i++){
+            ans=Math.min(ans,dp[row-1][i]);
         }
         return ans;
     }
-    public int helper(int row,int col,int[][] matrix,int rowLen,int colLen,int[][] dp){
-        if(col<0|| col>=colLen) return INF;
-        if(row==rowLen-1) return matrix[row][col];
-        if(dp[row][col]!=Integer.MIN_VALUE) return dp[row][col];
-        int [] colPath = {-1,0,1};
-        int path=Integer.MAX_VALUE;
-        for(int c:colPath){
-            if(col+c>=0 && col+c<=colLen){
-                path=Math.min(path,matrix[row][col]+helper(row+1,col+c,matrix,rowLen,colLen,dp));
-            }
-        }
-        return dp[row][col]=path;
-    }
-
 }
