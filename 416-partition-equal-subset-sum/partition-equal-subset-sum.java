@@ -1,39 +1,27 @@
 class Solution {
     public boolean canPartition(int[] nums) {
-        int len = nums.length;
         int sum=0;
+        int len=0;
+        //find total sum
         for(int i:nums){
             sum+=i;
+            len++;
         }
-        if(sum%2!=0) return false;
-        int tar = sum/2;
-        // make dp array
-        boolean[][] dp = new boolean[len][tar+1];
-        
-        for(boolean[] temp:dp){
-            Arrays.fill(temp,false);
+       int dp[][]=new int[len][sum+1];
+       for(int[] a: dp){
+        Arrays.fill(a,-1);
+       }
+        return helper(nums,0,sum,len-1,dp);
+    }
+    public boolean helper(int[] nums,int currSum,int sum,int idx,int[][] dp){
+        if(currSum*2==sum) return true;
+        if(idx==0){
+            return (nums[0]+currSum)*2==sum;
         }
-        //base case for tar=0 coloumn
-        for(int i=0;i<len;i++){
-            dp[i][0]=true;
-        }
-
-        // base case for nums[0] if we reach at tar = nums[0] we get true
-        if(nums[0]<=tar){
-            dp[0][nums[0]]=true;
-        }
-
-        //fill rest of dp array
-        for(int i=1;i<len;i++){
-            for(int j=1;j<=tar;j++){
-                boolean np = dp[i-1][j];
-                boolean p = false;
-                if(nums[i]<=j){
-                    p=dp[i-1][j-nums[i]];
-                }
-                dp[i][j] = p||np;
-            }
-        }
-        return dp[len-1][tar];
+        if(dp[idx][currSum]!=-1) return dp[idx][currSum]==1;
+        boolean p = helper(nums,currSum+nums[idx],sum,idx-1,dp);
+        boolean np = helper(nums,currSum,sum,idx-1,dp);
+        dp[idx][currSum]=p||np?1:0;
+        return p||np;
     }
 }
