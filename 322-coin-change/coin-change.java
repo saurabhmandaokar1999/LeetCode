@@ -1,22 +1,26 @@
 class Solution {
+    public static final int max = 10001;
     public int coinChange(int[] coins, int amount) {
-        int[] dp = new int[amount+1];
-        for(int i=0;i<=amount;i++){
-          if(i%coins[0]==0) dp[i]= i/coins[0];
-          else dp[i] = 100000;
-        }
-        for(int idx=1;idx<coins.length;idx++){
-            int[] temp = new int[amount+1];
-            for(int tar=1;tar<=amount;tar++){
-                int np=dp[tar];
-                int p=100000;
-                if(tar>=coins[idx]){
-                    p=1+temp[tar-coins[idx]];
-                }
-                temp[tar]=Math.min(p,np);
-            }
-            dp=temp;
-        }
-        return dp[amount] >= 100000 ? -1 : dp[amount];
+        int len = coins.length;
+        int[][] dp=new int[len][amount+1];
+        for(int[] d: dp){
+            Arrays.fill(d,-1);
+        } 
+        int ans = helper(coins,amount,len-1,dp);
+        return ans>=max? -1:ans;
     }
-}  
+    public int helper(int[] coins,int amount,int idx,int[][] dp){
+        if(amount==0) return 0;
+        if(idx==0){
+            return amount%coins[idx]==0 ? amount/coins[idx]:max;
+        }
+        if(dp[idx][amount]!=-1) return dp[idx][amount];
+        int p = max;
+        if(amount>=coins[idx]){
+            p=1+helper(coins,amount-coins[idx],idx,dp);
+        }        
+        int np = helper(coins,amount,idx-1,dp);
+        dp[idx][amount] = Math.min(p,np);
+        return dp[idx][amount];
+    }
+}
