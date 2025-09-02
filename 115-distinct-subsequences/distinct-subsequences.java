@@ -1,24 +1,18 @@
 class Solution {
     public int numDistinct(String s, String t) {
-        //here  we know t will always exaust first
+        //TO Space optimize this
         int ls=s.length();
         int lt=t.length();
-        int[][] dp = new int[ls][lt];
-        for(int[] d:dp){
-            Arrays.fill(d,-1);
+        int[][] dp = new int[ls+1][lt+1];
+        for(int i=0;i<=ls;i++){
+            dp[i][0]=1;
         }
-        return helper(ls-1,lt-1,s,t,dp);
-    }
-    public int helper(int ls,int lt,String s,String t,int[][] dp){
-        if(lt<0) return 1;
-        if(ls<0) return 0;
-
-        if(dp[ls][lt]!=-1) return dp[ls][lt];
-
-        if(s.charAt(ls)==t.charAt(lt)){
-            return dp[ls][lt]=helper(ls-1,lt-1,s,t,dp) + helper(ls-1,lt,s,t,dp);
-        }else{
-            return dp[ls][lt]=helper(ls-1,lt,s,t,dp);
+        for(int i=1;i<=ls;i++){
+            for(int j=1;j<=lt;j++){
+                if(s.charAt(i-1)==t.charAt(j-1)) dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+                else dp[i][j] = dp[i-1][j];
+            }
         }
+        return dp[ls][lt];
     }
 }
