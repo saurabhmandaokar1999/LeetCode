@@ -1,19 +1,29 @@
 class Solution {
-    public int lengthOfLIS(int[] nums) {
-        Integer[][] dp = new Integer[nums.length+1][nums.length+1];
-        return helper(nums,-1,0,nums.length,dp);
-    }
-    public int helper(int [] nums, int prev,int idx,int len,Integer[][] dp){
-        if(idx==len){
-            return 0;
-        }
-        if(dp[prev+1][idx+1]!=null) return dp[prev+1][idx+1];
-        int take=0;
-        if(prev==-1 || nums[idx]>nums[prev]){
-            take=1+helper(nums,idx,idx+1,len,dp);
-        }
-        int notTake=helper(nums,prev,idx+1,len,dp);
+    public int lengthOfLIS(int[] arr) {
+        int n = arr.length;
+       List<Integer> temp = new ArrayList<>();
+        temp.add(arr[0]);
 
-        return dp[prev+1][idx+1]= Math.max(take,notTake); 
+        int len = 1;
+
+        for (int i = 1; i < n; i++) {
+            if (arr[i] > temp.get(temp.size() - 1)) {
+                // arr[i] > the last element of temp array
+
+                temp.add(arr[i]);
+                len++;
+            } else {
+                // Replacement step
+                int ind = Collections.binarySearch(temp, arr[i]);
+
+                if (ind < 0) {
+                    ind = -ind - 1;
+                }
+
+                temp.set(ind, arr[i]);
+            }
+        }
+
+        return len;
     }
 } 
