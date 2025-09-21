@@ -1,18 +1,20 @@
 class Solution {
+    List<String> ans = new ArrayList<>();
     public List<String> generateParenthesis(int n) {
-        List<String> ans = new ArrayList<String>();
-        helper(ans,0,0,n,"");
+        helper(n,new StringBuilder(),0,0);
         return ans;
     }
-    public void helper( List<String> ans,int o,int c,int n,String curr){
-        if(o==c && (o+c ==2*n)){
-            ans.add(curr);
+    public void helper(int n,StringBuilder temp,int open,int close){
+        if(temp.length()==(2*n)){
+            ans.add(temp.toString());
         }
-        if(o<n){
-            helper(ans,o+1,c,n,curr+"(");
+        if(open<n){
+           helper(n,temp.append('('),open+1,close);
+           temp.deleteCharAt(temp.length()-1);
         }
-        if(c<o){
-            helper(ans,o,c+1,n,curr+")");
+        if(open-close>0){
+           helper(n,temp.append(')'),open,close+1);
+           temp.deleteCharAt(temp.length()-1);
         }
     }
-}
+} 
