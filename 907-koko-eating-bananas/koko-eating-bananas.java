@@ -1,33 +1,28 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-     int i=1;
-     int max = piles[0];
-     int ans=0;
-     for(int p:piles){
-        max = Math.max(max,p);
-     }
-     while(i<=max){
-        int mid = (i+max)/2;
-        if(canEat(mid,piles,h)){
-            ans=mid;
-            max=mid-1;
-        }else{
-             i=mid+1;
+        int low = 1;
+        int high = Integer.MIN_VALUE;
+        //using this to find uppar bound rather than sorting the array
+        //sorting takes more than O(n) TC
+        for(int i : piles){
+            high = Math.max(i,high);
         }
-     }
-     return ans;
-    }
-    public boolean canEat(int curr,int[] piles,int h){
-        int total = 0;
-        for(int i=0;i<piles.length;i++){
-            int p = piles[i];
-            if(p%curr == 0){
-                total+=(p/curr);
+        while(low<high){
+            int mid = (high+low)/2;
+            if(canEat(piles,h,mid)){
+               high=mid; 
             }else{
-                total+=((p/curr)+1);
+                low=mid+1;
             }
-            if(total>h) return false;
+        } 
+        return low;
+    }
+    public boolean canEat(int[] piles, int h,int mid){
+        long hoursNeeded = 0L;
+        for (int pile : piles) {
+            hoursNeeded += (pile + mid - 1) / mid; 
+            if (hoursNeeded > h) return false; 
         }
-        return total<=h;
+        return hoursNeeded <= h;
     }
 }
