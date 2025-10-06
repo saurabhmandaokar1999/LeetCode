@@ -31,10 +31,13 @@ class Solution {
         vis[row][col] = 1;
         
         boolean up = dfs(grid,row-1,col,n,vis,curr);
+        if(up) return up;
         boolean down = dfs(grid,row+1,col,n,vis,curr);
+        if(down) return down;
         boolean left = dfs(grid,row,col-1,n,vis,curr);
+        if(left) return left;
         boolean right = dfs(grid,row,col+1,n,vis,curr);
-        
-        return up || right || left || down;
+        return right;
+        //return up || right || left || down;
     }
 }
