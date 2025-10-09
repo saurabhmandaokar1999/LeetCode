@@ -1,25 +1,21 @@
 class Solution {
     public String removeOuterParentheses(String s) {
-        Stack<Character> stk = new Stack<>();
+        //This is the simplest soluton
+        // we maintain an integer open 
+        //This integer  is used to check if there is more than 1 open bracket then only append the current bracket else 
+        // skip the character significanlty reduces space and makes logic simple
+        int open = 0;
         StringBuilder sb = new StringBuilder();
-        StringBuilder ans = new StringBuilder();
-        for(int i=0;i<s.length();i++){
-            char c = s.charAt(i);
+        
+        for(char c : s.toCharArray()){
             if(c=='('){
-                stk.push(c);
-                sb.append(c);
+                open++;
+                if(open > 1) sb.append(c);
             }else{
-                stk.pop();
-                sb.append(c);
-            }
-            if(stk.isEmpty()){
-                if(sb.length()>0){
-                    ans.append(sb.substring(1,sb.length()));
-                    ans.setLength(ans.length()-1);
-                    sb.setLength(0);
-                }
+                if(open>1) sb.append(c);
+                open--;
             }
         }
-        return ans.toString();
+        return sb.toString();
     }
 }
