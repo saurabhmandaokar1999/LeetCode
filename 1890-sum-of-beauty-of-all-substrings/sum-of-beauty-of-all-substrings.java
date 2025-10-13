@@ -1,31 +1,23 @@
 class Solution {
     public int beautySum(String s) {
+        int ans = 0;
         int len = s.length();
-        int count = 0;
-        int[] alp = new int[26];
-
         for(int i=0;i<len;i++){
-            Arrays.fill(alp, 0);
+            int[] freq = new int[26];
             for(int j=i;j<len;j++){
-                int index = s.charAt(j)-'a';
-                alp[index]+=1;
-                int[] minMax = findMinMax(alp);
-                count += (minMax[1] - minMax[0]);
+                int min = Integer.MAX_VALUE;
+                int max = Integer.MIN_VALUE;
+                char c = s.charAt(j);
+                freq[c-'a']++;
+                for(int k=0;k<26;k++){
+                     if (freq[k] > 0){
+                    min = Math.min(min,freq[k]);
+                    max = Math.max(max,freq[k]);
+                    }
+                }
+                ans += max-min;
             }
         }
-        return count;
-    }
-    public static int[] findMinMax(int[] arr) {
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
-        
-        for (int value : arr) {
-            if (value > 0) {
-                min = Math.min(min, value);
-                max = Math.max(max, value);
-            }
-        }
-        
-        return new int[]{min, max};
+        return ans;
     }
 }
