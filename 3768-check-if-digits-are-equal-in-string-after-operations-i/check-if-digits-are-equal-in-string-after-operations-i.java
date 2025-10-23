@@ -1,17 +1,12 @@
 class Solution {
-    public boolean hasSameDigits(String s) {
-        int[] temp = new int[s.length()];
-
-        for(int i=0;i<s.length();i++){
-            temp[i] = s.charAt(i)-'0';
-        }
-        int ptr = temp.length;
-        while(ptr>2){
-            for(int i=0;i<ptr-1;i++){
-                temp[i]=(temp[i]+temp[i+1])%10;
-            }
-            ptr--;
-        }
-        return temp[0]==temp[1];
+    public boolean hasSameDigits(String s){
+       if(s.length() == 2){
+        return s.charAt(0) == s.charAt(1);
+       }
+       StringBuilder sb = new StringBuilder();
+       for(int i = 0;i < s.length()-1; i++){
+        sb.append(((int)s.charAt(i)+(int)s.charAt(i+1))%10);
+       }
+       return hasSameDigits(sb.toString());
     }
 }
