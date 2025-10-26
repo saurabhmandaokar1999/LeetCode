@@ -1,28 +1,23 @@
 class Solution {
     public int repeatedStringMatch(String a, String b) {
-        int lenA = a.length();
-        int lenB = b.length();
-        int count = 1;
         StringBuilder sb = new StringBuilder(a);
-        while(lenA < lenB){
+        int count = 1;
+
+        // Keep appending until sb is at least as long as b
+        while (sb.length() < b.length()) {
             sb.append(a);
-            lenA += a.length();
             count++;
         }
-        int ans = -1;
-        for(int i=0; i+lenB <= sb.length();i++){
-            if(sb.substring(i,i+lenB).equals(b)){
-                return count;
-            }
-        }
-        //check for overlap cases
+
+        // Check if b is a substring
+        if (sb.indexOf(b) != -1) return count;
+
+        // Check once more after adding one extra repeat (for overlap cases)
         sb.append(a);
         count++;
-        for(int i=0; i+lenB <= sb.length();i++){
-            if(sb.substring(i,i+lenB).equals(b)){
-                return count;
-            }
-        }
+        if (sb.indexOf(b) != -1) return count;
+
+        // Otherwise, not possible
         return -1;
     }
 }
