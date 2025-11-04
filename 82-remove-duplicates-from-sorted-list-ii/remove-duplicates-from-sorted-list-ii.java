@@ -10,17 +10,26 @@
  */
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        ListNode ans = new ListNode(-101);
-        ListNode pointer = ans;
+        if(head == null ||  head.next == null) return head;
         ListNode prev = new ListNode(-101);
-        while(head!=null){
-           if(head.next!=null && head.val != head.next.val && head.val != prev.val){
-            pointer.next = new ListNode(head.val);
-            pointer = pointer.next;
+        ListNode ans = prev;
+        prev.next = head;
+        boolean repeated = false;
+        while(head.next != null){
+            if(head.val == head.next.val){
+                head = head.next;
+                prev.next = null;
+                repeated = true;
+            }else{
+                if(repeated){
+                    head = head.next;
+                    prev.next = head;
+                    repeated = false;
+                }else{
+                prev = prev.next;
+                head = head.next;
+                }
             }
-            if(head.next == null && head.val != prev.val) { pointer.next = new ListNode(head.val);}
-            prev = head;
-            head = head.next;
         }
         return ans.next;
     }
