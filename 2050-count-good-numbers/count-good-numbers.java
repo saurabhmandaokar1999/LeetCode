@@ -1,28 +1,23 @@
 class Solution {
-    public long MOD = 1_000_000_007;
-    
+    public static final long modulo = 1000000007;
     public int countGoodNumbers(long n) {
-        
-        // Calculate the number of even and odd positions in the digit string
-        long odd = n/2;
-        long even = (n+1)/2;
-        return (int)(pow(5,even) * pow(4,odd) % MOD);
-    }
-    
-    public long pow(long x, long n){
-        
-        // Base case for the recursion
-        if(n==0) 
-            return 1;
-        long temp = pow(x,n/2);
-        
-        // If n is even, return (x^(n/2))^2
-        if(n%2==0){
-            return (temp * temp)% MOD;
+        long ans = 0, even = 0, odd = 0;
+        if(n % 2 == 0){
+            even = n/2;
+            odd = n/2;
+        }else{
+            even = (n/2)+1;
+            odd = n/2;
         }
-        // If n is odd, return (x^(n/2))^2 * x
-        else{
-            return (x * temp * temp)% MOD;
+        return (int)(power(5,even) * power(4,odd)%modulo);
+    }
+    public long power(long base , long exponent){
+        if(exponent == 0) return 1;
+        long answer = power(base,(exponent/2))%modulo;
+        if(exponent % 2 == 0){
+            return answer*answer % modulo;
+        }else{
+            return base*answer*answer % modulo;
         }
     }
 }
