@@ -1,34 +1,24 @@
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList();
         Arrays.sort(candidates);
-        List<List<Integer>> res = new ArrayList<>();
-
-        dfs(candidates, target, 0, new ArrayList<Integer>(), res);
-        return res;
+        helper(0,candidates,target,ans,new ArrayList<>());
+        return ans;
     }
-
-    private void dfs(int[] candidates, int target, int start, List<Integer> comb, List<List<Integer>> res) {
-        if (target < 0) {
+    public void helper(int idx, int[] candidates, int target,List<List<Integer>> ans, List<Integer>temp){
+        if(target == 0){
+            List<Integer> lst = new ArrayList(temp);
+            ans.add(lst);
             return;
         }
-
-        if (target == 0) {
-            res.add(new ArrayList<Integer>(comb));
+        if(target < 0 || idx >= candidates.length){
             return;
         }
-
-        for (int i = start; i < candidates.length; i++) {
-            if (i > start && candidates[i] == candidates[i-1]) {
-                continue;
-            }
-
-            if (candidates[i] > target) {
-                break;
-            }
-
-            comb.add(candidates[i]);
-            dfs(candidates, target - candidates[i], i + 1, comb, res);
-            comb.remove(comb.size() - 1);
-        }
+        int curr = candidates[idx];
+        temp.add(curr);
+        helper(idx+1,candidates,target-curr,ans,temp);
+        temp.remove(temp.size()-1);
+        while(idx < candidates.length-1 && candidates[idx]==candidates[idx+1]){idx++;}
+        helper(idx+1,candidates,target,ans,temp);
     }
 }
