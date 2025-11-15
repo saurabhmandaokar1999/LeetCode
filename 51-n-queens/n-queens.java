@@ -2,13 +2,16 @@ class Solution {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> ans = new ArrayList();  
         char [][] board = new char[n][n];
+        boolean[] dp1 = new boolean[(2*n)+1];
+        boolean[] dp2 = new boolean[(2*n)+1];
+        boolean[] dp3 = new boolean[n];
         for(char[] arr: board){
             Arrays.fill(arr,'.');
         }
-        placeQueen(0, n, n, ans, board);
+        placeQueen(0, n, n, ans, board,dp1, dp2, dp3);
         return ans;
     }
-    public void placeQueen(int row, int q, int n, List<List<String>> ans, char [][] board){
+    public void placeQueen(int row, int q, int n, List<List<String>> ans, char [][] board, boolean[] dp1, boolean[] dp2, boolean[] dp3){
         if(row >=n ){
             if(q==0){
                 ansHelper(board, ans);
@@ -16,9 +19,15 @@ class Solution {
             return;
         }
         for(int i=0; i<n; i++){
-            if(canPlace(board, row, i, n)){
+            if((canPlace(board, row, i, n, dp1, dp2, dp3))){
                 board[row][i] ='Q';
-                placeQueen(row+1, q-1, n, ans, board);
+                dp3[i] = true;
+                dp2[row+i] = true;
+                dp1[n+row-i] = true;
+                placeQueen(row+1, q-1, n, ans, board, dp1, dp2, dp3);
+                dp3[i] = false;
+                dp2[row+i] = false;
+                dp1[n+row-i] = false;
                 board[row][i] ='.';
             }
         }
@@ -30,27 +39,8 @@ class Solution {
         }
         ans.add(curr);
     }
-    public boolean canPlace(char[][] board, int row, int col,int n){
-        int r = row;
-        int c = col;
-        while(r >=0 && c >=0){
-            if(board[r][c] == 'Q') return false;
-            r--;
-        }
-        r = row;
-        c = col;
-        while(c >=0 && r >=0){
-            if(board[r][c] == 'Q') return false;
-            c--;
-            r--;
-        }
-        r = row;
-        c = col;
-        while(r >=0 && c < n ){
-            if(board[r][c] == 'Q') return false;
-            c++;
-            r--;
-        }
+    public boolean canPlace(char[][] board, int row, int col,int n, boolean[] dp1, boolean[] dp2, boolean[] dp3){
+        if(dp3[col] || dp2[row+col] || dp1[n+row-col]) return false;
         return true;
     }
 }
