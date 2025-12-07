@@ -1,31 +1,30 @@
 class Solution {
-    public int divide(int dividend, int divisor) {
-        if(dividend == divisor) return 1;
-        if (dividend == Integer.MIN_VALUE && divisor == -1) {
-            return Integer.MAX_VALUE;
+    public int divide(int d1, int d2) {
+        long count = 0;
+        boolean isNeg = false;
+        long dividend = (long)d1;
+        long divisor = (long)d2;
+        if(dividend<0){
+            dividend = 0-dividend;
+            isNeg = !isNeg;
         }
-        if(divisor == 1) return dividend;
-        if(dividend == -1) return -dividend;
-        int sign = 1;
-        if(dividend>0 && divisor<0) sign = -1;
-        if(dividend<0 && divisor>0) sign = -1;
-
-        long n = Math.abs((long)dividend);
-        long d = Math.abs((long)divisor);
-        int ans = 0;
-        while(n>=d)
-        {
-            int p = 0;
-            while(n >= d<<p)
-            p++;
-
-            p--;
-            n -= d<<p;
-            ans += 1<<p;
+         if(divisor < 0){
+            divisor = 0-divisor;
+            isNeg =!isNeg;
         }
-        if(ans>=Math.pow(2,31) && sign==1) return Integer.MAX_VALUE;
-        if(ans>=Math.pow(2,31) && sign==-1) return Integer.MIN_VALUE;
+        int temp = 0;
+        while(dividend >= divisor){
+            while(dividend >= (Math.pow(2,temp)*divisor)){
+                temp++;
+            }
+            dividend -= Math.pow(2,temp-1)*divisor;
+            count += Math.pow(2,temp-1);
+            temp=0;
+        }
+        if(isNeg)  count = 0-count;
 
-        return ans*sign;
+        if(count <=Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        if(count >= Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        return (int)count;
     }
 }
