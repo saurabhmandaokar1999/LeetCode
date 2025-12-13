@@ -1,11 +1,21 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        int sum1=nums.length,sum2=0;
-        for(int i=0;i<nums.length;i++){
-            sum1+=i;
-            sum2+=nums[i];
+        int sum = 0;
+        int max = 0;
+        int min = Integer.MAX_VALUE;
+        for(int i: nums){
+            sum+=i;
+            max = Math.max(max, i);
+            min = Math.min(min, i);
         }
-        int diff = sum1-sum2;
-        return diff;
+        int requiredSum = 0;
+        for(int i = 0; i<= max; i++){
+            requiredSum+=i;
+        }
+        if(requiredSum == sum) {
+            if(min != 0) return 0;
+            return max+1;
+        }
+        return requiredSum-sum;
     }
 }
