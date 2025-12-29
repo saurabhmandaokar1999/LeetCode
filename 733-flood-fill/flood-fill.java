@@ -1,28 +1,27 @@
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        int target = image[sr][sc];
         int m = image.length;
         int n = image[0].length;
-        boolean[][] vis = new boolean[m][n];
-
-        int[][] dir = new int[][]{{-1,0},{1,0},{0,-1},{0,1}};
-        int target = image[sr][sc];
-        Queue<Integer[]> q = new ArrayDeque<>();
-        q.offer(new Integer[]{sr,sc});
+        int[][] dir = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
+        boolean vis[][] = new boolean[m][n];
+        Queue<Pair<Integer,Integer>> q = new ArrayDeque<>();
         image[sr][sc] = color;
+        q.offer(new Pair<>(sr,sc));
         while(!q.isEmpty()){
-            Integer[] cordinates = q.poll();
-            int r = cordinates[0];
-            int c = cordinates[1];
-            for(int[] d : dir){
-                int row = r+d[0];
-                int col = c+d[1];
-                if(row >= 0 && col >=0 && row < m && col < n && image[row][col] == target && !vis[row][col]){
-                    image[row][col] = color;
-                    vis[row][col] = true;
-                    q.offer(new Integer[]{row, col});
+            int x = q.peek().getKey();
+            int y = q.peek().getValue();
+            q.poll();
+            for(int[] d : dir ){
+                int a = x+d[0];
+                int b = y+d[1];
+                if(a>=0 && b>=0 && a < m && b < n && image[a][b] == target && !vis[a][b]){
+                    q.offer(new Pair<>(a,b));
+                    image[a][b] = color;
+                    vis[a][b] = true;
                 }
             }
         }
-        return image;
+        return image;  
     }
 }
