@@ -1,33 +1,26 @@
+
+import java.util.*;
+
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
         int n = nums.length;
-        int i = 0;
-        List<List<Integer>> arr = new ArrayList<>();
-        while (i < n - 2) {
-            if (i > 0 && nums[i] == nums[i - 1]) {
-                i++;
-                continue;
-            }
-            int j = i + 1;
-            int k = n - 1;
-            while (j < k) {
-                int total = nums[i] + nums[j] + nums[k];
-                if (total > 0) {
-                    k--;
-                } else if (total < 0) {
-                    j++;
-                } else {
-                    arr.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    j++;
-                    while (nums[j] == nums[j - 1] && j < k) {
-                        j++;
-                    }
+
+        for (int i = 0; i < n - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            Set<Integer> seen = new HashSet<>();
+            for (int j = i + 1; j < n; j++) {
+                int complement = -nums[i] - nums[j];
+                if (seen.contains(complement)) {
+                    res.add(Arrays.asList(nums[i], complement, nums[j]));
+                    while (j + 1 < n && nums[j] == nums[j + 1]) j++;
                 }
+                seen.add(nums[j]);
             }
-            if (nums[i] > 0) return arr;
-            i++;
         }
-        return arr;
+
+
+        return res;
     }
 }
