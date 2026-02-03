@@ -11,7 +11,7 @@ class Solution {
         while(i<len-1 && nums[i]> nums[i+1]){
             i++;
         }
-        if(i!= f) isTri++;
+         isTri++;
         f=i;
         while(i < len-1 && nums[i] < nums[i+1]){
             i++;
