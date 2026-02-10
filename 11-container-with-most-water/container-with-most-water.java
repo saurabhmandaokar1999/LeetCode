@@ -1,15 +1,17 @@
 class Solution {
     public int maxArea(int[] height) {
-        int front= 0;
-        int last = height.length-1;
-        //You can also use Math.max()
-        //Just Using ternary operator for fun
-        int area = (last-front)*((height[front]<height[last])?height[front]:height[last]);
-        while(front<last){
-            if(height[front]>height[last]){ last--;}
-            else{ front++;}
-            area = Math.max(area,(last-front)*((height[front]<height[last])?height[front]:height[last]));
+        int start = 0;
+        int end = height.length-1;
+        int ans = (end-start)*Math.min(height[start],height[end]);
+
+        while(end > start){
+            if(height[start]>=height[end]){
+                end--;
+            }else{
+                start++;
+            }
+            ans = Math.max(ans, (end-start)*Math.min(height[start],height[end]));
         }
-        return area;
+        return ans;
     }
 }
