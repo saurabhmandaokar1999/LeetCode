@@ -1,7 +1,11 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
-        String s1 = s.chars().sorted().mapToObj(c->(char)c).map(String::valueOf).collect(Collectors.joining());
-        String s2 = t.chars().sorted().mapToObj(c->(char)c).map(String::valueOf).collect(Collectors.joining());
-        return s1.equals(s2);
+        char[] arr1 = s.toCharArray();
+        char[] arr2 = t.toCharArray();
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+        s = new String(arr1);
+        t = new String(arr2);
+        return s.equals(t);
     }
 }
